@@ -12,11 +12,6 @@ router.get('', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-//     const sortCategory = categories.toSorted((a, b) => { 
-//         return a.name.localeCompare(b.name); 
-//       }); 
-//     res.json(sortCategory);
-//    });
 //    מחזירה קטגוריה לפי קלט
 router.get('/:name', async (req, res) => {
     try {
@@ -31,24 +26,6 @@ router.get('/:name', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
-// router.get('/:name', (req, res) => {
-//     const getName = req.params.name.toLowerCase();
-//     const findCategory = categories.find((c) => c.name.toLowerCase() === getName);
-
-//     if (findCategory) {
-//         res.json(`Details of Category ${findCategory.name}`);
-//     } else {
-//         res.json(`Category ${getName} not found`);
-//     }
-// });
-// הוספת קטגוריה
-// router.post('/:product', (req, res) => {
-
-//     const getName = req.params.product;
-//     console.log(getName)
-//     const newProduct = { id: categories.length + 1, name: getName };
-//     save(newProduct);
-// });
 router.post('/:product', async (req, res) => {
     try {
       const category = new Category(req.body);
@@ -59,18 +36,6 @@ router.post('/:product', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
-// עדכון קטגוריה
-// router.put('/:id/:name', (req, res) => {
-//     const id = parseInt(req.params.id);
-//     const name = req.params.name;
-//     const findCategory = categories.find((c) => c.id === id);
-//     if (findCategory) {
-//         findCategory.name = name;
-//         res.json(`put of Category ${findCategory.id}`);
-//     } else {
-//         res.json(`Category ${id} not found`);
-//     }
-// });
 router.put('/:id/:name', async (req, res) => {
     try {
       const category = await Category.findByIdAndUpdate(req.params.id, req.params.name, { new: true });
@@ -85,18 +50,6 @@ router.put('/:id/:name', async (req, res) => {
     }
   });
 //  מחיקת קטגוריה
-// router.delete('/:id', (req, res) => {
-//     const id = parseInt(req.params.id);
-//     const findCategory = categories.find((c) => c.id === id);
-//     if (findCategory) {
-//         categories.splice(findCategory, 1);
-//     }
-
-
-//     categories.forEach(element => {
-//         console.log(element.name)
-//     });
-// })
 router.delete('/:id', async (req, res) => {
     try {
       const category = await Category.findByIdAndRemove(req.params.id);
@@ -122,17 +75,6 @@ router.get('/allproduct/:category', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-// router.get('/allproduct/:category', (req, res) => {
-//     const all = [];
-//     products.forEach(prod => {
-//         if (prod.category === req.params.category)
-//             all.push(prod);
-//     })
-//     const sortCategory = all.toSorted((a, b) => {
-//         return a.name.localeCompare(b.name);
-//     });
-//     res.json(sortCategory);
-// });
 // מחזירה את המוצר אם קיים
 router.get('/:category/:name', async (req, res) => {
     try {
@@ -147,16 +89,6 @@ router.get('/:category/:name', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-// router.get('/:category/:name', (req, res) => {
-//     const category = (req.params.category);
-//     const name = req.params.name;
-//     const findCategory = products.find((c) => c.category === category && c.name === name);
-//     if (findCategory) {
-//         res.json(`the product ${findCategory.name} is found!`);
-//     } else {
-//         res.json(`Category ${findCategory.name} not found`);
-//     }
-// });
 // עדכון מוצר לפי קטגוריה
 router.put('/allproduct/:id/:name', async (req, res) => {
     try {
@@ -171,17 +103,6 @@ router.put('/allproduct/:id/:name', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-// router.put('/allproduct/:id/:name', (req, res) => {
-//     const id = parseInt(req.params.id);
-//     const name = req.params.name;
-//     const findCategory = products.find((c) => c.id === id);
-//     if (findCategory) {
-//         findCategory.name = name;
-//         res.json(`put of Category ${findCategory.id}`);
-//     } else {
-//         res.json(`Category ${id} not found`);
-//     }
-// });
 // מחיקת מוצר
 router.delete('/allproduct', async (req, res) => {
     try {
@@ -196,18 +117,6 @@ router.delete('/allproduct', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-// router.delete('/allproduct/:id', (req, res) => {
-//     const id = parseInt(req.params.id);
-//     const findCategory = products.find((c) => c.id === id);
-//     if (findCategory) {
-//         products.splice(findCategory, 1);
-//     }
-
-
-//     products.forEach(element => {
-//         console.log(element.name)
-//     });
-// })
 // הוספת מוצר
 router.post('/allproduct', async (req, res) => {
     try {
@@ -221,21 +130,5 @@ router.post('/allproduct', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-// router.post('/allproduct/:product/:category', (req, res) => {
-//     const category = req.params.category;
-//     const getName = req.params.product;
-//     if (!(categories.find(c => c.name === category)))
-//         res.send("this category not found!")
-//     else {
-//         const newProduct = { id: products.length + 1, name: getName, category: category };
-//         // products.push(newProduct);
-//         saveP(newProduct);
-
-//     }
-
-//     products.forEach(element => {
-//         console.log(element.name)
-//     });
-// })
 
 module.exports = router;
